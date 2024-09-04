@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Messenger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #e9ebee;
+        }
+        #header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        #chat {
+            flex: 1;
+            padding: 10px;
+            overflow-y: scroll;
+            background-color: #f0f0f0;
+        }
+        #messageInput {
+            display: flex;
+            border-top: 1px solid #ccc;
+            background-color: #e9ebee;
+            padding: 10px;
+        }
+        #message {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        #sendButton, #endChatButton {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+            background-color: #333;
+            color: white;
+        }
+        #endChatButton {
+            background-color: #dc3545;
+        }
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 60%;
+            word-wrap: break-word;
+        }
+        .own-message {
+            background-color: #d1e7dd;
+            align-self: flex-end;
+        }
+        .other-message {
+            background-color: #f8d7da;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <span>Secure Messenger</span>
+        <button id="connectButton" onclick="connectUser()">Connect</button>
+    </div>
+    <div id="chat"></div>
+    <div id="messageInput">
+        <input type="text" id="message" placeholder="Type your message here..." autocomplete="off">
+        <button id="sendButton" onclick="sendMessage()">Send</button>
+        <button id="endChatButton" onclick="endChat()">End Chat</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const chat = document.getElementById('chat');
+        const messageInput = document.getElementById('message');
+        let username = '';
+        let connectedUser = '';
+        let chatHistory = [];
+
+        function initialize() {
+            username = prompt("Enter your username");
+            if (!username) {
+                alert("Username is required to proceed.");
+                return;
+            }
+            socket.emit('setUsername', username);
+        }
+
+        function connectUser() {
+            const userToConnect = prompt("Enter the username to connect with");
+            if (userToConnect) {
+                socket.emit('requestConnection', { from: username, to: userToConnect });
+            }
+        }
+
+        socket.on('connectionRequest', function(data) {
+            if (confirm(`${data.from} wants to connect with you. Do you accept?`)) {
+                connectedUser = data.from;
+                socket.emit('acceptConnection', { from: data.from, to: username });
+            }
+        });
+
+        socket.on('connectionAccepted', function(data) {
+            connectedUser = data.to;
+            alert(`Connected with ${connectedUser}`);
+        });
+
+        socket.on('message', function(data) {
+            if (data.username === connectedUser || data.username === username) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', data.username === username ? 'own-message' : 'other-message');
+                messageElement.innerText = `${data.username}: ${data.message}`;
+                chat.appendChild(messageElement);
+                chat.scrollTop = chat.scrollHeight;
+                chatHistory.push(`${data.username}: ${data.message}`);
+            }
+        });
+
+        function sendMessage() {
+            const message = messageInput.value;
+            if (connectedUser) {
+                socket.emit('message', { username, message });
+                messageInput.value = '';
+            } else {
+                alert("You are not connected to any user.");
+            }
+        }
+
+        function endChat() {
+            if (confirm("Save chat as PDF?")) {
+                saveChatAsPDF();
+            } else {
+                deleteAndExit();
+            }
+        }
+
+        function saveChatAsPDF() {
+            const doc = new jspdf.jsPDF();
+            doc.text(chatHistory.join('\n'), 10, 10);
+            doc.save('chat.pdf');
+            alert("Chat saved as PDF. Exiting...");
+            location.reload();
+        }
+
+        function deleteAndExit() {
+            alert("Chat deleted. Exiting...");
+            location.reload();
+        }
+
+        document.addEventListener("DOMContentLoaded", initialize);
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</body>
+</html>
