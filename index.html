@@ -1,165 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Messenger</title>
+    <title>প্রিয় চাঁদ</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background-color: #e9ebee;
+            padding: 0;
         }
-        #header {
+
+        body {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
+            height: 100vh;
+            background: linear-gradient(to bottom, #1e1e30, #0d0d1d);
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+            color: #f5f5f5;
+            position: relative;
         }
-        #chat {
-            flex: 1;
-            padding: 10px;
-            overflow-y: scroll;
-            background-color: #f0f0f0;
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite ease-in-out;
         }
-        #messageInput {
-            display: flex;
-            border-top: 1px solid #ccc;
-            background-color: #e9ebee;
-            padding: 10px;
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 0.3; }
         }
-        #message {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
+
+        .moon {
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, #ffffff, #d9d9d9 60%);
+            border-radius: 50%;
+            box-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
+            z-index: 1;
         }
-        #sendButton, #endChatButton {
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin-right: 10px;
-            background-color: #333;
-            color: white;
+
+        .tree-shadow {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            clip-path: polygon(0% 100%, 10% 60%, 20% 80%, 30% 50%, 40% 70%, 50% 40%, 60% 60%, 70% 35%, 80% 55%, 90% 30%, 100% 50%, 100% 100%);
+            z-index: 2;
         }
-        #endChatButton {
-            background-color: #dc3545;
+
+        .letter-container {
+            position: relative;
+            max-width: 600px;
+            width: 90%;
+            padding: 20px 30px;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #ffd1dc;
+            text-align: left;
+            z-index: 3;
+            font-family: 'Cursive', serif;
+            font-style: italic;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
         }
-        .message {
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 60%;
-            word-wrap: break-word;
+
+        .letter-text span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInSmooth 1s forwards;
         }
-        .own-message {
-            background-color: #d1e7dd;
-            align-self: flex-end;
+
+        .letter-text span:nth-child(odd) {
+            animation-delay: 0.1s;
         }
-        .other-message {
-            background-color: #f8d7da;
-            align-self: flex-start;
+
+        .letter-text span:nth-child(even) {
+            animation-delay: 0.15s;
+        }
+
+        @keyframes fadeInSmooth {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .love-message {
+            font-size: 2.5rem;
+            color: #ff5f75;
+            opacity: 0;
+            position: absolute;
+            bottom: 20px;
+            animation: reveal 1s forwards ease-in-out;
+            text-align: center;
+            width: 100%;
+            text-shadow: 0px 0px 10px #ff5f75;
+        }
+
+        @keyframes reveal {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 600px) {
+            .letter-container {
+                font-size: 1rem;
+                padding: 15px 20px;
+            }
+
+            .love-message {
+                font-size: 1.8rem;
+            }
+
+            .moon {
+                width: 100px;
+                height: 100px;
+                left: 10%;
+                top: 5%;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="header">
-        <span>Secure Messenger</span>
-        <button id="connectButton" onclick="connectUser()">Connect</button>
-    </div>
-    <div id="chat"></div>
-    <div id="messageInput">
-        <input type="text" id="message" placeholder="Type your message here..." autocomplete="off">
-        <button id="sendButton" onclick="sendMessage()">Send</button>
-        <button id="endChatButton" onclick="endChat()">End Chat</button>
+    <div class="moon"></div>
+    <div class="tree-shadow"></div>
+
+    <div class="star-container">
+        <script>
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement("div");
+                star.className = "star";
+                star.style.top = Math.random() * 100 + "vh";
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.animationDuration = Math.random() * 1 + 1 + "s";
+                document.body.appendChild(star);
+            }
+        </script>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <div class="letter-container">
+        <div class="letter-text" id="letter"></div>
+    </div>
+
+    <div class="love-message" id="loveMessage">আমি তোমাকে ভালোবাসি</div>
+
     <script>
-        const socket = io();
-        const chat = document.getElementById('chat');
-        const messageInput = document.getElementById('message');
-        let username = '';
-        let connectedUser = '';
-        let chatHistory = [];
+        const letterContent = `
+            প্রিয়তমা,  
+            তোমার চোখের অশ্রু যেন আমার হৃদয়ে গভীর ব্যথা হয়ে ঝরে পড়ে।  
+            জানো, তুমি আমার জীবনের সবচেয়ে দামী সুখ, আর তোমার কষ্ট আমায় কষ্ট দেয়।  
+            তোমার কষ্টের প্রতিটি ফোঁটা আমি তুলে নিতে চাই, তোমার হৃদয়ের ভার আমি ভাগ করে নিতে চাই।  
 
-        function initialize() {
-            username = prompt("Enter your username");
-            if (!username) {
-                alert("Username is required to proceed.");
-                return;
-            }
-            socket.emit('setUsername', username);
+            যখন তোমার মনে হয় তুমি একা, জেনে রেখো, আমার ভালোবাসা তোমার জন্য চিরকাল পাশে আছে।  
+            আমার ভালোবাসা তোমার প্রতিটি বেদনা মুছে দেবে,  
+            আমি প্রতিটি মুহূর্তে তোমার সঙ্গী হয়ে থাকব,  
+            তোমার হাসির অপেক্ষায় প্রতিটি সেকেন্ড আমি বেঁচে আছি।  
+
+            তুমি যদি একবার আমার দিকে চেয়ে হাসো, আমার সমস্ত দুঃখ নিমেষেই উড়ে যায়।  
+            তোমার চোখের অশ্রু আমার হৃদয় ছুঁয়ে যায়,  
+            তুমি সুখে থাকো, চিরকাল আমার ভালোবাসায় ভরপুর হয়ে।
+            তোমার পাশে চিরকাল,  
+            জয়`;
+
+        const letterElement = document.getElementById("letter");
+        const loveYouElement = document.getElementById("loveMessage");
+
+        function createPoemTextEffect(text) {
+            const words = text.split(/\s+/);
+            words.forEach((word, index) => {
+                const span = document.createElement("span");
+                span.textContent = word + " ";
+                span.style.animationDelay = `${index * 0.2}s`;
+                letterElement.appendChild(span);
+            });
         }
 
-        function connectUser() {
-            const userToConnect = prompt("Enter the username to connect with");
-            if (userToConnect) {
-                socket.emit('requestConnection', { from: username, to: userToConnect });
-            }
-        }
+        document.addEventListener("DOMContentLoaded", () => {
+            createPoemTextEffect(letterContent);
 
-        socket.on('connectionRequest', function(data) {
-            if (confirm(`${data.from} wants to connect with you. Do you accept?`)) {
-                connectedUser = data.from;
-                socket.emit('acceptConnection', { from: data.from, to: username });
-            }
+            const totalAnimationTime = (letterContent.split(/\s+/).length * 200) + 1000;
+
+            setTimeout(() => {
+                letterElement.style.display = "none";
+                loveYouElement.style.opacity = 1;
+            }, totalAnimationTime);
         });
-
-        socket.on('connectionAccepted', function(data) {
-            connectedUser = data.to;
-            alert(`Connected with ${connectedUser}`);
-        });
-
-        socket.on('message', function(data) {
-            if (data.username === connectedUser || data.username === username) {
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message', data.username === username ? 'own-message' : 'other-message');
-                messageElement.innerText = `${data.username}: ${data.message}`;
-                chat.appendChild(messageElement);
-                chat.scrollTop = chat.scrollHeight;
-                chatHistory.push(`${data.username}: ${data.message}`);
-            }
-        });
-
-        function sendMessage() {
-            const message = messageInput.value;
-            if (connectedUser) {
-                socket.emit('message', { username, message });
-                messageInput.value = '';
-            } else {
-                alert("You are not connected to any user.");
-            }
-        }
-
-        function endChat() {
-            if (confirm("Save chat as PDF?")) {
-                saveChatAsPDF();
-            } else {
-                deleteAndExit();
-            }
-        }
-
-        function saveChatAsPDF() {
-            const doc = new jspdf.jsPDF();
-            doc.text(chatHistory.join('\n'), 10, 10);
-            doc.save('chat.pdf');
-            alert("Chat saved as PDF. Exiting...");
-            location.reload();
-        }
-
-        function deleteAndExit() {
-            alert("Chat deleted. Exiting...");
-            location.reload();
-        }
-
-        document.addEventListener("DOMContentLoaded", initialize);
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </body>
 </html>
