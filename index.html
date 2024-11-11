@@ -80,11 +80,6 @@
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
-
-        /* Music Player Visibility */
-        .music {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -94,38 +89,29 @@
 
     <!-- Poem Container -->
     <div class="poem-container" id="poem">
-        <div class="poem-line">প্রিয়তমা চাঁদ, তুমি আমার আকাশের একান্তই নিজস্ব তারকা,</div>
-        <div class="poem-line">তোমার আলোয় আমার জীবন আলোকিত হয়ে ওঠে প্রতিটি রাতে।</div>
-        <div class="poem-line">তুমি আমার সেই স্বপ্ন, যে স্বপ্নে আমি অনন্তকালের প্রতিশ্রুতি খুঁজি।</div>
-        <div class="poem-line">তোমার হাসিতে আমার সকল ব্যথা নিমেষেই বিলীন হয়ে যায়।</div>
-        <div class="poem-line">তুমি আমার হৃদয়ের প্রতিটি বিট, প্রতিটি মুহূর্তে তুমি আছো।</div>
-        <div class="poem-line">আমার সমস্ত ভালোবাসা শুধু তোমার জন্য, চিরকাল, চিরদিন।</div>
+        <div class="poem-line">প্রিয়তমা, তোমার চোখে আমি হারিয়ে যাই,</div>
+        <div class="poem-line">যেন মৃদু চাঁদের আলো রাতে সমুদ্রের তীরে।</div>
+        <div class="poem-line">তোমার হাসি, সেই অমৃত সুরে,</div>
+        <div class="poem-line">আমার হৃদয়কে যেমন মাতাল করে দেয়।</div>
+        <div class="poem-line">তুমি আমার জীবনের এক স্বপ্ন, এক জাদু,</div>
+        <div class="poem-line">যে স্বপ্নে আমি প্রতিটি মুহূর্তে তোমায় খুঁজি।</div>
+        <div class="poem-line">তোমার প্রতিটি স্পর্শ যেন আমার জন্য এক কবিতা,</div>
+        <div class="poem-line">যে কবিতায় আমার ভালোবাসা চিরকাল বেঁচে থাকে।</div>
+        <div class="poem-line">তুমি ছাড়া আমি কিছুই নয়, শুধু এক শূন্যতা,</div>
+        <div class="poem-line">যেখানে তোমার নাম প্রতিধ্বনিত হয় অবারিত আকাশে।</div>
+        <div class="poem-line">তোমার ভালোবাসায় আমি গলে যাই,</div>
+        <div class="poem-line">তুমি হলেই আমার পৃথিবী, তুমি হলেই আমার চাঁদ।</div>
+        <div class="poem-line">চিরকাল তোমার পাশে থাকতে চাই,</div>
+        <div class="poem-line">যেখানে প্রতিটি দিন নতুন একটি প্রেমের সূচনা।</div>
+        <div class="poem-line">তুমি আমার প্রথম, তুমি আমার শেষ,</div>
+        <div class="poem-line">এ ভালোবাসা অমর, এক অদ্ভুত, অব্যক্ত গল্প।</div>
     </div>
 
-    <!-- Music Play Button -->
-    <button id="play-music" style="position: absolute; top: 20px; left: 20px; padding: 10px 20px; background-color: #ff4785; color: white; border: none; border-radius: 5px; cursor: pointer;">Play Music</button>
-
-    <!-- Music Player -->
-    <audio id="lofi-music" class="music" loop>
+    <!-- Music Embed (Use your local file or YouTube link) -->
+    <audio autoplay loop>
         <source src="lofi.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
+        Your browser does not support the audio tag.
     </audio>
-
-    <script>
-        // Play music when the button is clicked
-        document.getElementById('play-music').addEventListener('click', function() {
-            var music = document.getElementById('lofi-music');
-            music.play(); // Play the music
-            this.style.display = 'none'; // Hide the button after the music starts
-        });
-
-        // Ensure the poem lines appear with animation after page load
-        window.addEventListener('load', () => {
-            const poemLines = document.querySelectorAll('.poem-line');
-            poemLines.forEach((line, index) => {
-                line.style.animationDelay = `${index * 0.4}s`; // Apply staggered animation delays
-            });
-        });
-    </script>
 </body>
 </html>
+
