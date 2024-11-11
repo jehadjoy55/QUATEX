@@ -14,15 +14,15 @@
 
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background: linear-gradient(to top, #0d0d1d, #1e1e30);
             font-family: 'Georgia', serif;
             color: #ffd1dc;
-            overflow: hidden;
+            overflow-y: auto; /* Allow scrolling */
             position: relative;
-            flex-direction: column;
         }
 
         /* Moon and Tree Shadow Styling */
@@ -61,6 +61,8 @@
             backdrop-filter: blur(5px);
             animation: fadeIn 3s ease;
             margin-top: 20px;
+            max-height: 80vh; /* Allow poem container to scroll if the content is long */
+            overflow-y: auto; /* Make poem scrollable if necessary */
         }
 
         .poem-line {
