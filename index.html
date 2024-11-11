@@ -58,9 +58,9 @@
             font-family: 'Cursive', serif;
             border-radius: 15px;
             backdrop-filter: blur(5px);
+            animation: fadeIn 3s ease;
         }
 
-        /* Animation for the poem lines */
         .poem-line {
             display: inline-block;
             opacity: 0;
@@ -68,16 +68,22 @@
             animation: fadeLine 1s forwards;
         }
 
-        .poem-line:nth-child(1) { animation-delay: 0.5s; }
-        .poem-line:nth-child(2) { animation-delay: 1s; }
-        .poem-line:nth-child(3) { animation-delay: 1.5s; }
-        .poem-line:nth-child(4) { animation-delay: 2s; }
-        .poem-line:nth-child(5) { animation-delay: 2.5s; }
-        .poem-line:nth-child(6) { animation-delay: 3s; }
+        .poem-line:nth-child(even) { animation-delay: 0.2s; }
+        .poem-line:nth-child(odd) { animation-delay: 0.4s; }
 
         @keyframes fadeLine {
             0% { opacity: 0; transform: translateY(10px); }
             100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Music Player Visibility */
+        .music {
+            display: none;
         }
     </style>
 </head>
@@ -96,17 +102,18 @@
         <div class="poem-line">আমার সমস্ত ভালোবাসা শুধু তোমার জন্য, চিরকাল, চিরদিন।</div>
     </div>
 
-    <!-- Audio Player for Background Music -->
-    <audio autoplay loop>
+    <!-- Hidden Music Player -->
+    <audio autoplay loop class="music">
         <source src="lofi.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const poemLines = document.querySelectorAll(".poem-line");
+        // Ensure the poem lines appear with animation after page load
+        window.addEventListener('load', () => {
+            const poemLines = document.querySelectorAll('.poem-line');
             poemLines.forEach((line, index) => {
-                line.style.animationDelay = `${0.5 + index * 0.5}s`;
+                line.style.animationDelay = `${index * 0.4}s`; // Apply staggered animation delays
             });
         });
     </script>
