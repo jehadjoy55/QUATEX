@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>প্রিয় চাঁদ</title>
+    <title>প্রিয়তমা চাঁদ</title>
     <style>
+        /* General Styling */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,187 +17,87 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(to bottom, #1e1e30, #0d0d1d);
-            overflow: hidden;
+            background: linear-gradient(to top, #0d0d1d, #1e1e30);
             font-family: 'Georgia', serif;
-            color: #f5f5f5;
+            color: #ffd1dc;
+            overflow: hidden;
             position: relative;
         }
 
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            animation: twinkle 1.5s infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 0.3; }
-        }
-
+        /* Moon and Tree Shadow Styling */
         .moon {
             position: absolute;
-            top: 10%;
-            left: 15%;
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle, #ffffff, #d9d9d9 60%);
+            top: 15%;
+            left: 10%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #ffffff, #d9d9d9 50%);
             border-radius: 50%;
-            box-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
-            z-index: 1;
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.5);
         }
 
         .tree-shadow {
             position: absolute;
             bottom: 0;
-            left: 0;
             width: 100%;
-            height: 30vh;
+            height: 35vh;
             background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            clip-path: polygon(0% 100%, 10% 60%, 20% 80%, 30% 50%, 40% 70%, 50% 40%, 60% 60%, 70% 35%, 80% 55%, 90% 30%, 100% 50%, 100% 100%);
-            z-index: 2;
+            clip-path: polygon(0% 100%, 10% 65%, 20% 85%, 30% 50%, 40% 75%, 50% 40%, 60% 65%, 70% 35%, 80% 55%, 90% 30%, 100% 50%, 100% 100%);
         }
 
-        .letter-container {
+        /* Poem Container Styling */
+        .poem-container {
             position: relative;
             max-width: 600px;
-            width: 90%;
-            padding: 20px 30px;
-            font-size: 1.3rem;
-            line-height: 1.8;
+            padding: 20px 25px;
+            background: rgba(0, 0, 0, 0.6);
             color: #ffd1dc;
             text-align: left;
-            z-index: 3;
+            font-size: 1.2rem;
+            line-height: 1.8;
             font-family: 'Cursive', serif;
-            font-style: italic;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-            background: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
             backdrop-filter: blur(5px);
+            animation: fadeIn 3s ease;
         }
 
-        .letter-text span {
+        .poem-line {
             display: inline-block;
             opacity: 0;
             transform: translateY(10px);
-            animation: fadeInSmooth 1s forwards;
+            animation: fadeLine 1s forwards;
         }
 
-        .letter-text span:nth-child(odd) {
-            animation-delay: 0.1s;
+        .poem-line:nth-child(even) { animation-delay: 0.2s; }
+        .poem-line:nth-child(odd) { animation-delay: 0.4s; }
+
+        @keyframes fadeLine {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        .letter-text span:nth-child(even) {
-            animation-delay: 0.15s;
-        }
-
-        @keyframes fadeInSmooth {
-            0% {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .love-message {
-            font-size: 2.5rem;
-            color: #ff5f75;
-            opacity: 0;
-            position: absolute;
-            bottom: 20px;
-            animation: reveal 1s forwards ease-in-out;
-            text-align: center;
-            width: 100%;
-            text-shadow: 0px 0px 10px #ff5f75;
-        }
-
-        @keyframes reveal {
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        @media (max-width: 600px) {
-            .letter-container {
-                font-size: 1rem;
-                padding: 15px 20px;
-            }
-
-            .love-message {
-                font-size: 1.8rem;
-            }
-
-            .moon {
-                width: 100px;
-                height: 100px;
-                left: 10%;
-                top: 5%;
-            }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <!-- Moon and Tree Shadow -->
     <div class="moon"></div>
     <div class="tree-shadow"></div>
 
-    <div class="star-container">
-        <script>
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement("div");
-                star.className = "star";
-                star.style.top = Math.random() * 100 + "vh";
-                star.style.left = Math.random() * 100 + "vw";
-                star.style.animationDuration = Math.random() * 1 + 1 + "s";
-                document.body.appendChild(star);
-            }
-        </script>
+    <!-- Poem Container -->
+    <div class="poem-container" id="poem">
+        <div class="poem-line">প্রিয়তমা চাঁদ, তুমি আমার আকাশের একান্তই নিজস্ব তারকা,</div>
+        <div class="poem-line">তোমার আলোয় আমার জীবন আলোকিত হয়ে ওঠে প্রতিটি রাতে।</div>
+        <div class="poem-line">তুমি আমার সেই স্বপ্ন, যে স্বপ্নে আমি অনন্তকালের প্রতিশ্রুতি খুঁজি।</div>
+        <div class="poem-line">তোমার হাসিতে আমার সকল ব্যথা নিমেষেই বিলীন হয়ে যায়।</div>
+        <div class="poem-line">তুমি আমার হৃদয়ের প্রতিটি বিট, প্রতিটি মুহূর্তে তুমি আছো।</div>
+        <div class="poem-line">আমার সমস্ত ভালোবাসা শুধু তোমার জন্য, চিরকাল, চিরদিন।</div>
     </div>
 
-    <div class="letter-container">
-        <div class="letter-text" id="letter"></div>
-    </div>
-
-    <div class="love-message" id="loveMessage">আমি তোমাকে ভালোবাসি</div>
-
-    <script>
-        const letterContent = `
-               প্রিয়তমা, 
-    চাঁদের আলোয় তোমার মিষ্টি হাসি, 
-    এই হৃদয় যেন তোমারই ছায়ায় বাসি।
-    তোমার স্পর্শে মুছে যায় সব দুঃখের গাথা,
-    তোমার ভালোবাসা আমার জীবনের পথের প্রভা।
-    প্রিয়তমা, আমার জীবনের প্রতিটি স্বপ্ন তুমি, 
-    তোমার জন্যই সব সুর, সব কবিতা, আর আমার প্রতিটি মুহূর্তের নীরবতা।
-    তোমাকে ভালোবাসি চিরকাল, তোমার পাশে রয়েই যাব, চিরদিন।`;
-
-        const letterElement = document.getElementById("letter");
-        const loveYouElement = document.getElementById("loveMessage");
-
-        function createPoemTextEffect(text) {
-            const words = text.split(/\s+/);
-            words.forEach((word, index) => {
-                const span = document.createElement("span");
-                span.textContent = word + " ";
-                span.style.animationDelay = `${index * 0.2}s`;
-                letterElement.appendChild(span);
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            createPoemTextEffect(letterContent);
-
-            const totalAnimationTime = (letterContent.split(/\s+/).length * 200) + 1000;
-
-            setTimeout(() => {
-                letterElement.style.display = "none";
-                loveYouElement.style.opacity = 1;
-            }, totalAnimationTime);
-        });
-    </script>
+    <!-- YouTube Lofi Background Music -->
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/_9URguQ8-Qg?si=sOaBrHdQI0kpLHlj&autoplay=1&loop=1&playlist=_9URguQ8-Qg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </body>
 </html>
