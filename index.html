@@ -22,6 +22,7 @@
             color: #ffd1dc;
             overflow: hidden;
             position: relative;
+            flex-direction: column;
         }
 
         /* Moon and Tree Shadow Styling */
@@ -59,6 +60,7 @@
             border-radius: 15px;
             backdrop-filter: blur(5px);
             animation: fadeIn 3s ease;
+            margin-top: 20px;
         }
 
         .poem-line {
@@ -79,6 +81,22 @@
         @keyframes fadeIn {
             0% { opacity: 0; }
             100% { opacity: 1; }
+        }
+
+        /* Play Button Styling */
+        .play-button {
+            padding: 10px 20px;
+            background-color: #ffd1dc;
+            color: #0d0d1d;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .play-button:hover {
+            background-color: #f0a0b0;
         }
     </style>
 </head>
@@ -107,11 +125,20 @@
         <div class="poem-line">এ ভালোবাসা অমর, এক অদ্ভুত, অব্যক্ত গল্প।</div>
     </div>
 
-    <!-- Music Embed (Use your local file or YouTube link) -->
-    <audio autoplay loop>
+    <!-- Audio Player with Play Button -->
+    <audio id="lofi-audio">
         <source src="lofi.mp3" type="audio/mp3">
         Your browser does not support the audio tag.
     </audio>
+
+    <button class="play-button" onclick="playMusic()">Play Music</button>
+
+    <script>
+        // Function to play the audio
+        function playMusic() {
+            var audio = document.getElementById('lofi-audio');
+            audio.play();
+        }
+    </script>
 </body>
 </html>
-
