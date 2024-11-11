@@ -102,13 +102,23 @@
         <div class="poem-line">আমার সমস্ত ভালোবাসা শুধু তোমার জন্য, চিরকাল, চিরদিন।</div>
     </div>
 
-    <!-- Hidden Music Player -->
-    <audio autoplay loop class="music">
+    <!-- Music Play Button -->
+    <button id="play-music" style="position: absolute; top: 20px; left: 20px; padding: 10px 20px; background-color: #ff4785; color: white; border: none; border-radius: 5px; cursor: pointer;">Play Music</button>
+
+    <!-- Music Player -->
+    <audio id="lofi-music" class="music" loop>
         <source src="lofi.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
     <script>
+        // Play music when the button is clicked
+        document.getElementById('play-music').addEventListener('click', function() {
+            var music = document.getElementById('lofi-music');
+            music.play(); // Play the music
+            this.style.display = 'none'; // Hide the button after the music starts
+        });
+
         // Ensure the poem lines appear with animation after page load
         window.addEventListener('load', () => {
             const poemLines = document.querySelectorAll('.poem-line');
