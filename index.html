@@ -60,7 +60,7 @@
             border-radius: 15px;
             backdrop-filter: blur(5px);
             animation: fadeIn 3s ease;
-            margin-top: 20px;
+            margin-top: 100px;
             max-height: 80vh; /* Allow poem container to scroll if the content is long */
             overflow-y: auto; /* Make poem scrollable if necessary */
         }
@@ -85,7 +85,7 @@
             100% { opacity: 1; }
         }
 
-        /* Play Button Styling */
+        /* Play Button Styling (Positioned at the top) */
         .play-button {
             padding: 10px 20px;
             background-color: #ffd1dc;
@@ -94,7 +94,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 20px;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10; /* Ensure the button is above other content */
         }
 
         .play-button:hover {
@@ -103,6 +107,9 @@
     </style>
 </head>
 <body>
+    <!-- Play Button (Positioned at the top) -->
+    <button class="play-button" onclick="playMusic()">Play Music</button>
+
     <!-- Moon and Tree Shadow -->
     <div class="moon"></div>
     <div class="tree-shadow"></div>
@@ -127,13 +134,11 @@
         <div class="poem-line">এ ভালোবাসা অমর, এক অদ্ভুত, অব্যক্ত গল্প।</div>
     </div>
 
-    <!-- Audio Player with Play Button -->
+    <!-- Audio Player -->
     <audio id="lofi-audio">
         <source src="lofi.mp3" type="audio/mp3">
         Your browser does not support the audio tag.
     </audio>
-
-    <button class="play-button" onclick="playMusic()">Play Music</button>
 
     <script>
         // Function to play the audio
